@@ -23,16 +23,14 @@ ytpl -input ./config -output ./output
 
 ### Example
 
-[A sample yaml](./test/dev/na/a.yaml) config which we want to render
-
+[A sample yaml config](./test/dev/na/a.yaml) 
 ```yaml
 a:
   b:
     c: {{ .abc }}
 ```
 
-Any values which will be injected to templates, they should be put into yaml files which start with "_"
-
+Yaml files which start with "_" prefix are used as a source of values for variables.
 
 [A sample values holder](./test/_env.yaml)
 ```yaml
