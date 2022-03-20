@@ -1,3 +1,4 @@
 a:
   b:
-    c: | {{- .a.abc2 | nindent 6 -}}
+    c: | #test 
+{{- .a.abc2 | indent 6 -}}

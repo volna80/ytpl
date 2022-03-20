@@ -51,14 +51,16 @@ func main() {
 			if err != nil {
 				return err
 			}
-			yaml.Unmarshal(yamlFile, vals)
+			err = yaml.Unmarshal(yamlFile, vals)
+			if err != nil {
+				log.Fatal("Invalid yaml: "+path+" ", err)
+			}
 		}
 		return nil
 	})
 
 	if err != nil {
-		log.Println(err)
-		return
+		log.Fatal(err)
 	}
 
 	//execute templates
@@ -83,10 +85,22 @@ func main() {
 			}
 
 			writer := bufio.NewWriter(file)
-			defer writer.Flush()
 			err = tpl(path, vals, writer)
 			if err != nil {
 				log.Println(err)
+			}
+			writer.Flush()
+
+			//validate the result
+			yamlFile, err := ioutil.ReadFile(file.Name())
+			if err != nil {
+				log.Println(err)
+				return err
+			}
+
+			err = yaml.Unmarshal(yamlFile, make(map[string]interface{}))
+			if err != nil {
+				log.Fatal("Invalid yaml: "+file.Name()+" ", err)
 			}
 
 		}
