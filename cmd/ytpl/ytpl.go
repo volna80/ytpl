@@ -87,7 +87,7 @@ func main() {
 			writer := bufio.NewWriter(file)
 			err = tpl(path, vals, writer)
 			if err != nil {
-				log.Println(err)
+				log.Fatal(err)
 			}
 			writer.Flush()
 
